@@ -1,0 +1,46 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/cart/cart",
+    "pages/news/news",
+    "pages/profile/profile"
+  ],
+  "subPackages": [],
+  "window": {
+    "navigationBarTextStyle": "white",
+    "navigationBarTitleText": "怂怂商城",
+    "navigationBarBackgroundColor": "#b50e03",
+    "backgroundColor": "#F8F8F8"
+  },
+  "tabBar": {
+    "selectedColor": "#b50e03",
+    "list": [
+      {
+        "text": "首页",
+        "pagePath": "pages/index/index",
+        "iconPath": "static/images/tabs/home.png",
+        "selectedIconPath": "static/images/tabs/home-active.png"
+      },
+      {
+        "text": "资讯",
+        "pagePath": "pages/news/news",
+        "iconPath": "static/images/tabs/news.png",
+        "selectedIconPath": "static/images/tabs/news-active.png"
+      },
+      {
+        "text": "购物车",
+        "pagePath": "pages/cart/cart",
+        "iconPath": "static/images/tabs/cart.png",
+        "selectedIconPath": "static/images/tabs/cart-active.png"
+      },
+      {
+        "text": "个人中心",
+        "pagePath": "pages/profile/profile",
+        "iconPath": "static/images/tabs/profile.png",
+        "selectedIconPath": "static/images/tabs/profile-active.png"
+      }
+    ]
+  },
+  "usingComponents": {},
+  "sitemapLocation": "sitemap.json"
+}

@@ -1,0 +1,75 @@
+{
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+			"path": "pages/index/index"
+		},
+		{
+            "path" : "pages/cart/cart",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": ""
+            }
+            
+        },
+		{
+            "path" : "pages/category/category",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "分类页面"
+            }
+            
+        },
+		{
+            "path" : "pages/profile/profile",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "个人中心"
+            }
+            
+        },
+		{
+            "path" : "pages/goodsList/goodsList",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "商品列表页",
+				"enablePullDownRefresh":true
+            }
+            
+        }
+    ],
+	"globalStyle": {
+		"navigationBarTextStyle": "white",
+		"navigationBarTitleText": "怂怂商城",
+		"navigationBarBackgroundColor": "#b50e03",
+		"backgroundColor": "#F8F8F8"
+	},
+	"tabBar":{
+		"selectedColor":"#b50e03",
+		"list": [
+			{
+				"text": "首页",
+				"pagePath":"pages/index/index",
+				"iconPath":"static/images/tabs/home.png",
+				"selectedIconPath":"static/images/tabs/home-active.png"
+			},
+			{
+				"text": "分类",
+				"pagePath":"pages/category/category",
+				"iconPath":"static/images/tabs/category.png",
+				"selectedIconPath":"static/images/tabs/category-active.png"
+			},
+			{
+				"text": "购物车",
+				"pagePath":"pages/cart/cart",
+				"iconPath":"static/images/tabs/cart.png",
+				"selectedIconPath":"static/images/tabs/cart-active.png"
+			},
+			{
+				"text": "个人中心",
+				"pagePath":"pages/profile/profile",
+				"iconPath":"static/images/tabs/profile.png",
+				"selectedIconPath":"static/images/tabs/profile-active.png"
+			}
+		]
+	}
+}
