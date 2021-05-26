@@ -5,7 +5,8 @@
 			<view class="first_tab" v-if="tabs[0].isActive">
 				<navigator class="goods_item_container"
 					v-for="(item, index) in goodsList"
-					:key="item.goods_id">
+					:key="item.goods_id"
+					:url="`/pages/goodsDetail/goodsDetail?goods_id=${item.goods_id}`">
 					<view class="goods_img_wrap">
 						<image :src="item.goods_small_logo ?  item.goods_small_logo : 'https://ww1.sinaimg.cn/large/007rAy9hgy1g24by9t530j30i20i2glm.jpg'" mode="widthFix"></image>
 					</view>

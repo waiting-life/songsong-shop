@@ -1,5 +1,11 @@
 import config from './config'
+let times = 0
 export const request = (url, data = {}, method="GET") => {
+	times++
+	uni.showLoading({
+		title: '加载中',
+		mask:true
+	})
   // const baseUrl = 'http://localhost:3000'
   return new Promise((resolve, reject) => {
     uni.request({
@@ -13,6 +19,12 @@ export const request = (url, data = {}, method="GET") => {
 	 },
 	 fail: (err) => {
 		 reject(err)
+	 },
+	 complete: () => {
+		 times--
+		 if(times === 0) {
+			 uni.hideLoading()
+		 } 
 	 }
      // header: {
      //   cookie: wx.getStorageSync('cookies') ? wx.getStorageSync('cookies').find(item => item.indexOf('MUSIC_U') !== -1) : ''

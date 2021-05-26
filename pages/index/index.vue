@@ -40,6 +40,7 @@
 
 <script>
 	import {request} from '../../request/request.js'
+	
 	import SearchInput from '../../components/SearchInput.vue'
 	export default {
 		data() {

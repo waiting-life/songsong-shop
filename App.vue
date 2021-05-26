@@ -13,6 +13,7 @@
 </script>
 
 <style>
+	@import './static/iconfont/iconfont.css';
 	/*每个页面公共css */
 	view,image,text,button,navigator,swiper {
 		margin: 0;
