@@ -60,13 +60,13 @@
 				</view>
 				<view>包含运费</view>
 			</view>
-			<view class="order_pay_wrap">结算：({{totalNum}})</view>
+			<view class="order_pay_wrap" @click="handlePay">结算：({{totalNum}})</view>
 		</view>
 	</view>
 </template>
 
 <script>
-	import {getSetting, openSetting, chooseAddress} from '../../utils/uni-api.js'
+	import {getSetting, openSetting, chooseAddress, showModal, showToast} from '../../utils/uni-api.js'
 	export default {
 		data() {
 			return {
@@ -156,12 +156,37 @@
 			},
 			
 			// 对商品数量的编辑
-			handleItemNumEdit(index, number) {
-				if(this.cartList[index].num <=0 && number=== -1) {
+			async handleItemNumEdit(index, number) {
+				if(this.cartList[index].num < 1 && number=== -1) {
 					return
-				} 
+				}
+				if(this.cartList[index].num === 1 && number === -1) {
+					const result = await showModal("提示", "您是否要删除")
+					if(result.confirm) {
+						this.cartList.splice(index, 1)
+						this.setCart(this.cartList)
+					}
+					return
+				}
 				this.cartList[index].num += number
 				this.setCart(this.cartList)
+			},
+			// 点击结算
+			async handlePay() {
+				// 1. 判断收货地址
+				if(!this.address.userName) {
+					await showToast({title: '你好没有选择收货地址'})
+					return
+				}
+				// 2. 判断用户有没有选购商品
+				if(this.totalNum === 0) {
+					await showToast({title: '您还没有选购商品'})
+					return
+				}
+				// 跳转到支付页面
+				uni.navigateTo({
+					url: '/pages/pay/pay'
+				})
 			}
 		}
 	}

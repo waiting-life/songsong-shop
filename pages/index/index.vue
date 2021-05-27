@@ -78,7 +78,6 @@
 			},
 			async getFloorListData() {
 				const {message} = await request('/home/floordata')
-				console.log(message)
 				this.floorListData = message
 			}
 		}

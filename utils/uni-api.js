@@ -48,3 +48,33 @@ export const openSetting = () => {
 		})
 	})
 }
+
+export const showModal = ( title= '', content='') => {
+	return new Promise((resolve, reject) => {
+		uni.showModal({
+			title,
+			content,
+			success: (result) => {
+				resolve(result)
+			},
+			fail: (err) => {
+				reject(err)
+			}
+		})
+	})
+}
+export const showToast = ({title, content}) => {
+	return new Promise((resolve, reject) => {
+		uni.showToast({
+			title,
+			content,
+			icon: 'none',
+			success: (result) => {
+				resolve(result)
+			},
+			fail: (err) => {
+				reject(err)
+			}
+		})
+	})
+}
