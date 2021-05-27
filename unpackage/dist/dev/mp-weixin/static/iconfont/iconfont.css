@@ -5,6 +5,7 @@
     url('//at.alicdn.com/t/font_2526522_8igna79o65q.woff?t=1620654382360') format('woff'),
     url('//at.alicdn.com/t/font_2526522_8igna79o65q.ttf?t=1620654382360') format('truetype');
 }
+
 .iconfont {
   font-family: "iconfont" !important;
   font-size: 16px;
@@ -12,41 +13,43 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
 .icon-konggouwuche:before {
   content: "\e655";
 }
+
 .icon-receipt-address:before {
   content: "\e673";
 }
+
 .icon-fukuantongzhi:before {
   content: "\e60c";
 }
+
 .icon-ding_dan:before {
   content: "\e604";
 }
+
 .icon-tuihuotuikuan_dianpu:before {
   content: "\e773";
 }
+
 .icon-gouwuche:before {
   content: "\e60a";
 }
+
 .icon-shoucang:before {
   content: "\e683";
 }
+
 .icon-kefu:before {
   content: "\e603";
 }
+
 .icon-shoucang1:before {
   content: "\e6fc";
 }
+
 .icon-fenxiang:before {
   content: "\e605";
 }
-
-/*每个页面公共css */
-view,image,text,button,navigator,swiper {
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
-}
-

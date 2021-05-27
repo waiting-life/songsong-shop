@@ -40,10 +40,10 @@
   },
   "compileType": "miniprogram",
   "libVersion": "",
-  "appid": "touristappid",
+  "appid": "wxe4d6b24bad85c603",
   "projectname": "songsong-shop",
   "condition": {
-    "search": {
+    "search": { 
       "list": []
     },
     "conversation": {

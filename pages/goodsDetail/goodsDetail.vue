@@ -37,7 +37,7 @@
 				<view class="iconfont icon-gouwuche"></view>
 				<view>购物车</view>
 			</navigator>
-			<view class="tool_item btn_cart"@click="handleAddCart">
+			<view class="tool_item btn_cart" @click="handleAddCart">
 				<view>加入购物车</view>
 			</view>
 			<view class="tool_item btn_buy">
@@ -58,18 +58,21 @@
 			}
 		},
 		onLoad(options) {
-			console.log(options)
+			// console.log(options)
 			const {goods_id} = options
 			this.getGoodsDetail(goods_id)
 		},
 		methods: {
 			async getGoodsDetail(goods_id) {
 				const {message} = await request(`/goods/detail?goods_id=${goods_id}`)
-				const {goods_name, goods_price, goods_introduce} = message
+				// console.log(message)
+				this.GoodsInfo = message
+				const {goods_name, goods_price, goods_introduce, goods_big_logo} = message
 				this.goodsDetailObj = {
 					goods_name,
 					goods_price, 
-					goods_introduce
+					goods_introduce,
+					goods_big_logo
 				}
 				this.goodsDetailSwipers = message.pics
 			},
@@ -85,11 +88,12 @@
 				// 1. 获取缓存中的购物车数据
 				const Cart = uni.getStorageSync('cart') || []
 				// 2. 先判断当前商品是否存在
-				let index = Cart.findIndex(item => item.goods_id === this.goodsDetailObj.goods_id)
+				let index = Cart.findIndex(item => item.goods_id === this.GoodsInfo.goods_id)
 				// 如果不存在
 				if(index === -1) {
-					this.goodsDetailObj.num = 1
-					Cart.push(this.goodsDetailObj)
+					this.GoodsInfo.num = 1
+					this.GoodsInfo.checked = false
+					Cart.push(this.GoodsInfo)
 				} else {
 					Cart[index].num++
 				}
