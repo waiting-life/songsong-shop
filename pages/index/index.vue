@@ -64,7 +64,7 @@
 		methods: {
 			async getSwiperData() {
 				try{
-					const {message} = await request('/home/swiperdata')
+					const {message} = await request({url: '/home/swiperdata'})
 					this.swiperData = message
 				}catch{
 					uni.showToast({
@@ -73,11 +73,11 @@
 				}
 			},
 			async getNavigatorData() {
-				const {message} = await request('/home/catitems')
+				const {message} = await request({url: '/home/catitems'})
 				this.navigatorData = message
 			},
 			async getFloorListData() {
-				const {message} = await request('/home/floordata')
+				const {message} = await request({url: '/home/floordata'})
 				this.floorListData = message
 			}
 		}

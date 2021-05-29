@@ -196,7 +196,7 @@ var _request = __webpack_require__(/*! ../../request/request.js */ 20);function 
   },
   methods: {
     getGoodsDetail: function getGoodsDetail(goods_id) {var _this = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var _yield$request, message, goods_name, goods_price, goods_introduce, goods_big_logo;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:_context.next = 2;return (
-                  (0, _request.request)("/goods/detail?goods_id=".concat(goods_id)));case 2:_yield$request = _context.sent;message = _yield$request.message;
+                  (0, _request.request)({ url: "/goods/detail?goods_id=".concat(goods_id) }));case 2:_yield$request = _context.sent;message = _yield$request.message;
                 // console.log(message)
                 _this.GoodsInfo = message;
                 goods_name = message.goods_name, goods_price = message.goods_price, goods_introduce = message.goods_introduce, goods_big_logo = message.goods_big_logo;

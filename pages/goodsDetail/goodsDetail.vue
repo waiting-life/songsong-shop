@@ -64,7 +64,7 @@
 		},
 		methods: {
 			async getGoodsDetail(goods_id) {
-				const {message} = await request(`/goods/detail?goods_id=${goods_id}`)
+				const {message} = await request({url: `/goods/detail?goods_id=${goods_id}`})
 				// console.log(message)
 				this.GoodsInfo = message
 				const {goods_name, goods_price, goods_introduce, goods_big_logo} = message

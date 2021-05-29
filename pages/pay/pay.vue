@@ -47,13 +47,14 @@
 				</view>
 				<view>包含运费</view>
 			</view>
-			<view class="order_pay_wrap" @click="handlePay">支付：({{totalNum}})</view>
+			<view class="order_pay_wrap" @click="handleOrderPay">支付：({{totalNum}})</view>
 		</view>
 	</view>
 </template>
 
 <script>
-	import {getSetting, openSetting, chooseAddress, showModal, showToast} from '../../utils/uni-api.js'
+	import {getSetting, openSetting, chooseAddress, showModal, showToast, requestPayment} from '../../utils/uni-api.js'
+	import {request} from '../../request/request.js'
 	export default {
 		data() {
 			return {
@@ -76,8 +77,50 @@
 					this.totalNum+=item.num
 				})
 			},
-			handlePay() {
-				console.log('已支付')
+			async handleOrderPay() {
+				// console.log('已支付')
+				try{
+					// 1. 先判断缓存中有没有token
+					const token = uni.getStorageSync('token')
+					// 2. 没有，跳转到授权页面 进行获取token
+					if(!token) {
+						uni.navigateTo({
+							url: '/pages/auth/auth',
+						})
+						return
+					}
+					// 有token，创建订单， 获取订单编号
+					// console.log('已经存在token')
+					// 准备请求头参数
+					// const header  = {
+					// 	Authorization: token
+					// }
+					// 准备请求体参数
+					const order_price = this.totalPrice
+					const consignee_addr = this.address.allAddress
+					const cart = this.cartList
+					let goods = []
+					cart.forEach(item => goods.push({
+						goods_id: item.goods_id,
+						goods_number: item.num,
+						goods_price: item.goods_price
+					}))
+					const orderParams = {order_price, consignee_addr, goods}
+					// 准备发送请求，创建订单，获取订单编号
+					const {order_number} = await request({url: '/my/orders/create', data: orderParams, mthod: 'post' })
+					console.log(order_number)
+					// 准备发起预支付的接口
+					const {pay} = await request({url: '/my/orders/req_unifiedorder', method: 'post', data: {order_number}})
+					// 发起微信支付
+					await requestPayment(pay)
+					// 查询后台，看下订单状态是否成功
+					const result = await request({url: '/my/orders/chkOrder', method: 'post', data: {order_number}})
+					console.log(result)
+					showToast('支付成功')
+				}catch(e){
+					//TODO handle the exception
+					showToast('支付失败')
+				}
 			}
 		}
 	}

@@ -130,7 +130,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@babel/runtime/regenerator */ 17));
 
 
 
@@ -185,61 +185,75 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var _uniApi = __webpack_require__(/*! ../../utils/uni-api.js */ 30); //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-var _default = { data: function data() {return { cartList: [], address: {}, totalPrice: 0, totalNum: 0 };}, onShow: function onShow() {this.getInitPayData();}, methods: { getInitPayData: function getInitPayData() {var _this = this;var cart = uni.getStorageSync('cart') || [];this.address = uni.getStorageSync('address') || {};this.cartList = cart.filter(function (item) {return item.checked;});cart.forEach(function (item) {_this.totalPrice += item.num * item.goods_price;_this.totalNum += item.num;});}, handlePay: function handlePay() {console.log('已支付');} } };exports.default = _default;
+var _uniApi = __webpack_require__(/*! ../../utils/uni-api.js */ 30);
+var _request = __webpack_require__(/*! ../../request/request.js */ 20);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var _default =
+{
+  data: function data() {
+    return {
+      cartList: [],
+      address: {},
+      totalPrice: 0,
+      totalNum: 0 };
+
+  },
+  onShow: function onShow() {
+    this.getInitPayData();
+  },
+  methods: {
+    getInitPayData: function getInitPayData() {var _this = this;
+      var cart = uni.getStorageSync('cart') || [];
+      this.address = uni.getStorageSync('address') || {};
+      this.cartList = cart.filter(function (item) {return item.checked;});
+      cart.forEach(function (item) {
+        _this.totalPrice += item.num * item.goods_price;
+        _this.totalNum += item.num;
+      });
+    },
+    handleOrderPay: function handleOrderPay() {var _this2 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var token, order_price, consignee_addr, cart, goods, orderParams, _yield$request, order_number, _yield$request2, pay, result;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:_context.prev = 0;
+
+
+                // 1. 先判断缓存中有没有token
+                token = uni.getStorageSync('token');
+                // 2. 没有，跳转到授权页面 进行获取token
+                if (token) {_context.next = 5;break;}
+                uni.navigateTo({
+                  url: '/pages/auth/auth' });return _context.abrupt("return");case 5:
+
+
+
+                // 有token，创建订单， 获取订单编号
+                // console.log('已经存在token')
+                // 准备请求头参数
+                // const header  = {
+                // 	Authorization: token
+                // }
+                // 准备请求体参数
+                order_price = _this2.totalPrice;
+                consignee_addr = _this2.address.allAddress;
+                cart = _this2.cartList;
+                goods = [];
+                cart.forEach(function (item) {return goods.push({
+                    goods_id: item.goods_id,
+                    goods_number: item.num,
+                    goods_price: item.goods_price });});
+
+                orderParams = { order_price: order_price, consignee_addr: consignee_addr, goods: goods };
+                // 准备发送请求，创建订单，获取订单编号
+                _context.next = 13;return (0, _request.request)({ url: '/my/orders/create', data: orderParams, mthod: 'post' });case 13:_yield$request = _context.sent;order_number = _yield$request.order_number;
+                console.log(order_number);
+                // 准备发起预支付的接口
+                _context.next = 18;return (0, _request.request)({ url: '/my/orders/req_unifiedorder', method: 'post', data: { order_number: order_number } });case 18:_yield$request2 = _context.sent;pay = _yield$request2.pay;_context.next = 22;return (
+
+                  (0, _uniApi.requestPayment)(pay));case 22:_context.next = 24;return (
+
+                  (0, _request.request)({ url: '/my/orders/chkOrder', method: 'post', data: { order_number: order_number } }));case 24:result = _context.sent;
+                console.log(result);
+                (0, _uniApi.showToast)('支付成功');_context.next = 32;break;case 29:_context.prev = 29;_context.t0 = _context["catch"](0);
+
+                //TODO handle the exception
+                (0, _uniApi.showToast)('支付失败');case 32:case "end":return _context.stop();}}}, _callee, null, [[0, 29]]);}))();
+
+    } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),

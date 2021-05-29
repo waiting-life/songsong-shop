@@ -6,7 +6,9 @@
     "pages/profile/profile",
     "pages/goodsList/goodsList",
     "pages/goodsDetail/goodsDetail",
-    "pages/pay/pay"
+    "pages/pay/pay",
+    "pages/auth/auth",
+    "pages/login/login"
   ],
   "subPackages": [],
   "window": {

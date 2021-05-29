@@ -77,7 +77,7 @@
 		},
 		methods: {
 			async getCategoryList(currentIndex) {
-				const {message} = await request('/categories')
+				const {message} = await request({url: '/categories'})
 				this.Cates = message
 				// 把数据存入本地存储中
 				uni.setStorageSync('cates', {time: Date.now(), data: this.Cates})

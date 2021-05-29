@@ -8891,9 +8891,15 @@ if (hadRuntime) {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.request = void 0;var _config = _interopRequireDefault(__webpack_require__(/*! ./config */ 21));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.request = void 0;var _config = _interopRequireDefault(__webpack_require__(/*! ./config */ 21));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}
 var times = 0;
-var request = function request(url) {var data = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};var method = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : "GET";
+var request = function request(params) {
+  // 判断url中是否带有/my/， 如果有，请求的是私有的路径，带上header token
+  var header = _objectSpread({}, params.header);
+  if (params.url.includes('/my/')) {
+    // 拼接header，带上token
+    header['Authorization'] = uni.getStorageSync('token');
+  }
   times++;
   uni.showLoading({
     title: '加载中',
@@ -8901,12 +8907,12 @@ var request = function request(url) {var data = arguments.length > 1 && argument
 
   // const baseUrl = 'http://localhost:3000'
   return new Promise(function (resolve, reject) {
-    uni.request({
-      // 本地host
-      url: "".concat(_config.default.baseUrl).concat(url),
+    uni.request(_objectSpread(_objectSpread({},
+    params), {}, {
+      header: header,
+      url: "".concat(_config.default.baseUrl).concat(params.url),
       // 真机
-      data: data,
-      method: method,
+
       success: function success(result) {
         resolve(result.data);
       },
@@ -8935,7 +8941,7 @@ var request = function request(url) {var data = arguments.length > 1 && argument
       // fail:(err) => {
       //   reject(err)
       // }
-    });
+    }));
   });
 };exports.request = request;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
@@ -8969,7 +8975,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.showToast = exports.showModal = exports.openSetting = exports.chooseAddress = exports.getSetting = exports.showLoading = void 0;var showLoading = function showLoading() {var title = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "加载中";
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.getUserProfile = exports.getUserInfo = exports.requestPayment = exports.login = exports.showToast = exports.showModal = exports.openSetting = exports.chooseAddress = exports.getSetting = exports.showLoading = void 0;function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var showLoading = function showLoading() {var title = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "加载中";
   return new Promise(function (resolve, reject) {
     uni.showLoading({
       title: title,
@@ -9049,6 +9055,62 @@ var showToast = function showToast(_ref) {var title = _ref.title,content = _ref.
 
   });
 };exports.showToast = showToast;
+
+var login = function login() {
+  return new Promise(function (resolve, reject) {
+    uni.login({
+      success: function success(result) {
+        resolve(result);
+      },
+      fail: function fail(err) {
+        reject(err);
+      } });
+
+  });
+};exports.login = login;
+
+var requestPayment = function requestPayment(pay) {
+  return new Promise(function (resolve, reject) {
+    uni.requestPayment(_objectSpread(_objectSpread({},
+    pay), {}, {
+      success: function success(result) {
+        resolve(result);
+      },
+      fail: function fail(err) {
+        reject(err);
+      } }));
+
+  });
+};exports.requestPayment = requestPayment;
+
+
+var getUserInfo = function getUserInfo(_ref2) {var _ref2$provider = _ref2.provider,provider = _ref2$provider === void 0 ? "weixin" : _ref2$provider,loginRes = _ref2.loginRes;
+  return new Promise(function (resolve, reject) {
+    uni.getUserInfo({
+      provider: provider,
+      success: function success(loginRes) {
+        resolve(loginRes);
+      },
+      fail: function fail(err) {
+        reject(err);
+      } });
+
+  });
+};exports.getUserInfo = getUserInfo;
+
+var getUserProfile = function getUserProfile() {
+  return new Promise(function (resolve, reject) {
+    uni.getUserProfile({
+      desc: 'Wexin', // 这个参数是必须的
+      success: function success(result) {
+        resolve(result);
+      },
+      fail: function fail(err) {
+        reject(err);
+      } });
+
+  });
+};exports.getUserProfile = getUserProfile;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ })

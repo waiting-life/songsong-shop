@@ -73,7 +73,7 @@
 		},
 		methods: {
 			async getGoodsDetail() {
-				const {message} = await request('/goods/search', this.QueryParams )
+				const {message} = await request({url: '/goods/search', data: this.QueryParams} )
 				this.goodsList = message.goods
 			},
 			

@@ -209,7 +209,7 @@ var _request = __webpack_require__(/*! ../../request/request.js */ 20);function 
   },
   methods: {
     getCategoryList: function getCategoryList(currentIndex) {var _this = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var _yield$request, message;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:_context.next = 2;return (
-                  (0, _request.request)('/categories'));case 2:_yield$request = _context.sent;message = _yield$request.message;
+                  (0, _request.request)({ url: '/categories' }));case 2:_yield$request = _context.sent;message = _yield$request.message;
                 _this.Cates = message;
                 // 把数据存入本地存储中
                 uni.setStorageSync('cates', { time: Date.now(), data: _this.Cates });

@@ -78,3 +78,59 @@ export const showToast = ({title, content}) => {
 		})
 	})
 }
+
+export const login = () => {
+	return new Promise((resolve, reject) => {
+		uni.login({
+			success: (result) => {
+				resolve(result)
+			},
+			fail: (err) => {
+				reject(err)
+			}
+		})
+	})
+}
+
+export const requestPayment = (pay) => {
+	return new Promise((resolve, reject) => {
+		uni.requestPayment({
+			...pay,
+			success: (result) => {
+				resolve(result)
+			},
+			fail: (err) => {
+				reject(err)
+			}
+		})
+	})
+}
+
+
+export const getUserInfo = ({provider="weixin", loginRes}) => {
+	return new Promise((resolve, reject) => {
+		uni.getUserInfo({
+			provider,
+			success: (loginRes) => {
+				resolve(loginRes)
+			},
+			fail: (err) => {
+				reject(err)
+			}
+		})
+	})
+}
+
+export const getUserProfile = () => {
+	return new Promise((resolve, reject) => {
+		uni.getUserProfile({
+		    desc:'Wexin',     // 这个参数是必须的
+		    success: result =>{
+		        resolve(result)
+		    },
+		    fail: err =>{
+		        reject(err)
+		    }
+		})
+	})
+}
